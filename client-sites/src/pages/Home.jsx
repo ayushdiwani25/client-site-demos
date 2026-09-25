@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const demos = [
   { name: 'Stride Strength Club', path: '/gym', description: 'A focused fitness studio landing page with classes, plans, coaches, and a free trial flow.' },
 ]
@@ -11,9 +13,9 @@ export default function Home() {
         <p className="mt-4 text-base text-muted max-w-lg">A set of focused, production-ready site templates for small businesses.</p>
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           {demos.map((demo) => (
-            <a
+            <Link
               key={demo.path}
-              href={demo.path}
+              to={demo.path}
               className="group block rounded-2xl border border-border bg-white p-6 transition-shadow hover:shadow-md"
             >
               <span className="text-xs font-semibold uppercase tracking-widest text-court">Demo</span>
@@ -23,7 +25,7 @@ export default function Home() {
                 View site
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
