@@ -607,7 +607,7 @@ button {
   letter-spacing: -5px;
   margin: 15px 0;
 }
-.circle-btn {
+.app a.circle-btn {
   width: 100px;
   height: 100px;
   border-radius: 50%;

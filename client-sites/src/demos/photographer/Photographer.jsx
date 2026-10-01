@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Camera, Aperture, Eye, Sparkles, MapPin,
-  ZoomIn, ZoomOut, Maximize2, Minimize2, X, ChevronLeft, ChevronRight,
-  Award, ArrowUpRight, Layers, Film,
-  Check, Clock, Grid, MoveHorizontal, RefreshCw, Sun, Zap,
+  ZoomIn, ZoomOut, X, ChevronLeft, ChevronRight,
+  Award, Layers, Film,
+  Check, Grid, MoveHorizontal, Sun,
   Sparkle, SlidersHorizontal, ArrowDownRight, Phone
 } from 'lucide-react'
 import {
@@ -12,6 +12,7 @@ import {
   addOns, philosophyPillars, gearKit, accolades,
   testimonials, sizes
 } from './data'
+import Footer from '../../shared/components/Footer'
 
 const inner = 'mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'
 
@@ -72,7 +73,7 @@ function PhotographerNav() {
           <a href="#book" className="hover:text-vermilion transition-colors">Inquire</a>
         </nav>
 
-        {/* Direct CTA */}
+        {/* Direct CTA & Mobile Toggle */}
         <div className="flex items-center gap-2.5">
           <a
             href="#book"
@@ -272,7 +273,7 @@ function Hero({ onOpenLightbox }) {
                   </span>
                   <button
                     onClick={triggerNextFrame}
-                    className="flex items-center gap-1 text-vermilion hover:text-white transition-colors"
+                    className="flex items-center gap-1 text-vermilion hover:text-white transition-colors cursor-pointer"
                   >
                     <span>NEXT FRAME</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -306,6 +307,13 @@ function Gallery({ onOpenLightbox }) {
   const [selectedCat, setSelectedCat] = useState('All')
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'filmstrip'
   const [searchQuery, setSearchQuery] = useState('')
+  const filmstripRef = useRef(null)
+
+  const scrollFilmstrip = (direction) => {
+    if (filmstripRef.current) {
+      filmstripRef.current.scrollBy({ left: direction * 340, behavior: 'smooth' })
+    }
+  }
 
   // Filtered photos
   const filtered = useMemo(() => {
@@ -343,7 +351,7 @@ function Gallery({ onOpenLightbox }) {
             <button
               onClick={() => setViewMode('grid')}
               aria-label="Masonry grid view"
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${viewMode === 'grid'
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${viewMode === 'grid'
                 ? 'bg-vermilion text-obsidian shadow-sm'
                 : 'text-silver/60 hover:text-white'
                 }`}
@@ -354,7 +362,7 @@ function Gallery({ onOpenLightbox }) {
             <button
               onClick={() => setViewMode('filmstrip')}
               aria-label="35mm filmstrip contact sheet view"
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${viewMode === 'filmstrip'
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${viewMode === 'filmstrip'
                 ? 'bg-vermilion text-obsidian shadow-sm'
                 : 'text-silver/60 hover:text-white'
                 }`}
@@ -374,10 +382,8 @@ function Gallery({ onOpenLightbox }) {
               return (
                 <button
                   key={cat}
-                  onClick={() => {
-                    setSelectedCat(cat)
-                  }}
-                  className={`relative rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${active ? 'text-obsidian font-bold' : 'text-silver/70 hover:text-silver bg-white/5 border border-white/10'
+                  onClick={() => setSelectedCat(cat)}
+                  className={`relative rounded-full px-4 py-1.5 text-xs font-semibold transition-colors cursor-pointer ${active ? 'text-obsidian font-bold' : 'text-silver/70 hover:text-silver bg-white/5 border border-white/10'
                     }`}
                 >
                   {active && (
@@ -406,7 +412,8 @@ function Gallery({ onOpenLightbox }) {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-2 text-xs text-silver/40 hover:text-white"
+                className="absolute right-3 top-2 text-xs text-silver/40 hover:text-white cursor-pointer"
+                title="Clear search"
               >
                 ✕
               </button>
@@ -422,59 +429,62 @@ function Gallery({ onOpenLightbox }) {
           >
             <AnimatePresence>
               {filtered.map((p, idx) => (
-                  <motion.div
-                    key={p.id}
-                    layout
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3, delay: idx * 0.03 }}
-                    className="break-inside-avoid"
+                <motion.div
+                  key={p.id}
+                  layout
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3, delay: idx * 0.03 }}
+                  className="break-inside-avoid"
+                >
+                  <div
+                    onClick={() => onOpenLightbox(photos.findIndex((x) => x.id === p.id))}
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-charcoal transition-all duration-300 hover:border-vermilion/50 hover:shadow-xl hover:shadow-black/70"
                   >
-                    <div
-                      onClick={() => onOpenLightbox(photos.findIndex((x) => x.id === p.id))}
-                      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-charcoal transition-all duration-300 hover:border-vermilion/50 hover:shadow-xl hover:shadow-black/70"
-                    >
-                      {/* Photo Image */}
-                      <PhotoImg
-                        p={p}
-                        eager={idx < 4}
-                        className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
+                    {/* Photo Image */}
+                    <PhotoImg
+                      p={p}
+                      eager={idx < 4}
+                      className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
 
-                      {/* Hover Overlay Dark Gradient */}
-                      <div className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-90" />
+                    {/* Hover Overlay Dark Gradient */}
+                    <div className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-90" />
 
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                        {p.awards ? (
-                          <span className="flex items-center gap-1 rounded-full bg-vermilion/90 px-2.5 py-0.5 text-[10px] font-bold text-obsidian tracking-wide uppercase shadow">
-                            <Sparkle className="w-3 h-3" />
-                            {p.awards}
-                          </span>
-                        ) : (
-                          <span className="rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-mono text-silver/80 border border-white/10">
-                            {p.category}
-                          </span>
-                        )}
+                    {/* Top Badges */}
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+                      {p.awards ? (
+                        <span className="flex items-center gap-1 rounded-full bg-vermilion/90 px-2.5 py-0.5 text-[10px] font-bold text-obsidian tracking-wide uppercase shadow">
+                          <Sparkle className="w-3 h-3" />
+                          {p.awards}
+                        </span>
+                      ) : (
+                        <span className="rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-mono text-silver/80 border border-white/10">
+                          {p.category}
+                        </span>
+                      )}
 
-                      </div>
+                      <span className="rounded-full bg-black/50 p-1.5 text-silver/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ZoomIn className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
 
-                      {/* Bottom Details (Shows on Hover) */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-10">
-                        <p className="font-frame text-base font-bold text-white tracking-wide">{p.title}</p>
-                        <p className="text-xs text-silver/70 line-clamp-1 mt-0.5">{p.story}</p>
+                    {/* Bottom Details (Shows on Hover) */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+                      <p className="font-frame text-base font-bold text-white tracking-wide">{p.title}</p>
+                      <p className="text-xs text-silver/70 line-clamp-1 mt-0.5">{p.story}</p>
 
-                        <div className="mt-3 flex items-center justify-between border-t border-white/15 pt-2 text-[11px] font-mono text-silver/60">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3 text-vermilion" />
-                            {p.location}
-                          </span>
-                          <span className="text-vermilion font-semibold">{p.exif.aperture}</span>
-                        </div>
+                      <div className="mt-3 flex items-center justify-between border-t border-white/15 pt-2 text-[11px] font-mono text-silver/60">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-vermilion" />
+                          {p.location}
+                        </span>
+                        <span className="text-vermilion font-semibold">{p.exif.aperture}</span>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
+                </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
@@ -483,10 +493,27 @@ function Gallery({ onOpenLightbox }) {
         {/* View Mode 2: 35mm Analog Filmstrip Contact Sheet */}
         {viewMode === 'filmstrip' && (
           <div className="mt-10 overflow-hidden rounded-2xl border border-white/15 bg-black p-4 sm:p-6 shadow-2xl">
-            {/* Filmstrip Header Header */}
+            {/* Filmstrip Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/15 text-xs font-mono text-amber-500">
-              <span>● KODAK PROFESSIONAL PORTRA 400 · 120 / 35mm FORMAT</span>
-              <span>DX CODE: 84920 · 36 EXP</span>
+              <span className="truncate pr-2">● KODAK PROFESSIONAL PORTRA 400 · 120 / 35mm FORMAT · 36 EXP</span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  onClick={() => scrollFilmstrip(-1)}
+                  className="flex items-center justify-center h-6 w-6 rounded border border-white/20 bg-charcoal text-silver hover:border-vermilion hover:text-white transition-colors cursor-pointer"
+                  aria-label="Scroll filmstrip left"
+                  title="Scroll left"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => scrollFilmstrip(1)}
+                  className="flex items-center justify-center h-6 w-6 rounded border border-white/20 bg-charcoal text-silver hover:border-vermilion hover:text-white transition-colors cursor-pointer"
+                  aria-label="Scroll filmstrip right"
+                  title="Scroll right"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
 
             {/* Sprocket Holes Top */}
@@ -497,7 +524,10 @@ function Gallery({ onOpenLightbox }) {
             </div>
 
             {/* Scrollable Filmstrip Track */}
-            <div className="flex gap-6 overflow-x-auto py-6 px-2 snap-x snap-mandatory scrollbar-thin">
+            <div
+              ref={filmstripRef}
+              className="flex gap-6 overflow-x-auto py-6 px-2 snap-x snap-mandatory scrollbar-thin"
+            >
               {filtered.map((p, idx) => (
                 <div
                   key={p.id}
@@ -537,7 +567,7 @@ function Gallery({ onOpenLightbox }) {
                 setSearchQuery('')
                 setSelectedCat('All')
               }}
-              className="mt-4 rounded-full bg-vermilion px-4 py-1.5 text-xs font-bold text-obsidian"
+              className="mt-4 rounded-full bg-vermilion px-4 py-1.5 text-xs font-bold text-obsidian cursor-pointer"
             >
               Reset Filters
             </button>
@@ -568,8 +598,14 @@ function BeforeAfterColorAlchemy() {
     if (e.touches[0]) handleMove(e.touches[0].clientX)
   }
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e) => {
     isDragging.current = true
+    handleMove(e.clientX)
+  }
+
+  const handleTouchStart = (e) => {
+    isDragging.current = true
+    if (e.touches[0]) handleMove(e.touches[0].clientX)
   }
 
   useEffect(() => {
@@ -634,6 +670,7 @@ function BeforeAfterColorAlchemy() {
             <div
               ref={containerRef}
               onMouseDown={handleMouseDown}
+              onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               className="relative aspect-4/5 sm:aspect-4/3 w-full select-none overflow-hidden rounded-2xl border border-white/20 bg-obsidian shadow-2xl cursor-ew-resize"
             >
@@ -649,24 +686,22 @@ function BeforeAfterColorAlchemy() {
                 </span>
               </div>
 
-              {/* Layer 2: RAW Capture (Left / Clipped) */}
+              {/* Layer 2: RAW Capture (Left / Clipped via clipPath) */}
               <div
-                className="absolute inset-0 overflow-hidden"
-                style={{ width: `${sliderPos}%` }}
+                className="absolute inset-0 pointer-events-none"
+                style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
               >
-                <div className="absolute inset-0 w-full h-full" style={{ width: containerRef.current ? containerRef.current.clientWidth : '100%' }}>
-                  <PhotoImg
-                    p={samplePhoto}
-                    large
-                    className="h-full w-full object-cover"
-                    style={{
-                      filter: 'contrast(0.78) brightness(1.08) saturate(0.42) sepia(0.06)',
-                    }}
-                  />
-                  <span className="absolute bottom-4 left-4 z-10 rounded-full bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider text-silver/80 border border-white/20">
-                    RAW Flat Sensor
-                  </span>
-                </div>
+                <PhotoImg
+                  p={samplePhoto}
+                  large
+                  className="h-full w-full object-cover"
+                  style={{
+                    filter: 'contrast(0.78) brightness(1.08) saturate(0.42) sepia(0.06)',
+                  }}
+                />
+                <span className="absolute bottom-4 left-4 z-10 rounded-full bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider text-silver/80 border border-white/20">
+                  RAW Flat Sensor
+                </span>
               </div>
 
               {/* Draggable Divider Line & Handle */}
@@ -688,8 +723,6 @@ function BeforeAfterColorAlchemy() {
 
 // Philosophy & Gear Kit
 function PhilosophyAndGear() {
-  const [activeGearTab, setActiveGearTab] = useState(0)
-
   return (
     <section id="philosophy" className="bg-obsidian py-24 text-silver border-t border-white/10">
       <div className={inner}>
@@ -848,7 +881,11 @@ Could you please confirm your calendar availability?`
 
                 <button
                   type="button"
-                  className={`mt-8 w-full rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition-all ${isSelected
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSelectedPackage(pkg)
+                  }}
+                  className={`mt-8 w-full rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${isSelected
                     ? 'bg-vermilion text-obsidian shadow-md'
                     : 'bg-white/10 text-silver hover:bg-white/15'
                     }`}
@@ -894,7 +931,7 @@ Could you please confirm your calendar availability?`
                   <select
                     value={locationPreference}
                     onChange={(e) => setLocationPreference(e.target.value)}
-                    className="w-full rounded-xl border border-white/15 bg-charcoal px-3 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none"
+                    className="w-full rounded-xl border border-white/15 bg-charcoal px-3 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none cursor-pointer"
                   >
                     <option>Ahmedabad & Old City</option>
                     <option>Udaipur / Rajasthan Haveli</option>
@@ -999,7 +1036,7 @@ Could you please confirm your calendar availability?`
               <div className="mt-8 space-y-3">
                 <button
                   type="submit"
-                  className="btn-cta w-full rounded-xl bg-vermilion py-3.5 text-xs font-bold uppercase tracking-wider text-obsidian shadow-lg shadow-vermilion/30 hover:bg-vermilion-glow flex items-center justify-center gap-2"
+                  className="btn-cta w-full rounded-xl bg-vermilion py-3.5 text-xs font-bold uppercase tracking-wider text-obsidian shadow-lg shadow-vermilion/30 hover:bg-vermilion-glow flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Send Proposal via WhatsApp</span>
@@ -1028,15 +1065,33 @@ function ClientStories() {
             <p className="text-xs font-mono font-bold uppercase tracking-wider text-vermilion">Client Stories</p>
             <h2 className="mt-1 font-frame text-4xl font-black text-white">Words From Those Before The Glass.</h2>
           </div>
-          <div className="flex gap-2">
-            {testimonials.map((_, i) => (
+          <div className="flex items-center gap-3">
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveStory(i)}
+                  className={`h-2 rounded-full transition-all cursor-pointer ${activeStory === i ? 'w-8 bg-vermilion' : 'w-2 bg-white/20'}`}
+                  aria-label={`Slide ${i + 1}`}
+                />
+              ))}
+            </div>
+            <div className="flex items-center gap-1.5 ml-2">
               <button
-                key={i}
-                onClick={() => setActiveStory(i)}
-                className={`h-2 rounded-full transition-all ${activeStory === i ? 'w-8 bg-vermilion' : 'w-2 bg-white/20'}`}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
+                onClick={() => setActiveStory((activeStory - 1 + testimonials.length) % testimonials.length)}
+                aria-label="Previous testimonial"
+                className="p-1.5 rounded-full border border-white/15 hover:border-vermilion text-silver/80 hover:text-white transition-colors cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveStory((activeStory + 1) % testimonials.length)}
+                aria-label="Next testimonial"
+                className="p-1.5 rounded-full border border-white/15 hover:border-vermilion text-silver/80 hover:text-white transition-colors cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1094,17 +1149,14 @@ function ClientStories() {
 function Lightbox({ index, setIndex }) {
   const [zoom, setZoom] = useState(false)
 
-  if (index === null || !photos[index]) return null
-  const p = photos[index]
-
-  const close = () => {
+  const close = useCallback(() => {
     setIndex(null)
-  }
+  }, [setIndex])
 
-  const step = (dir) => {
+  const step = useCallback((dir) => {
     setZoom(false)
-    setIndex((index + dir + photos.length) % photos.length)
-  }
+    setIndex((prev) => (prev + dir + photos.length) % photos.length)
+  }, [setIndex])
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -1115,7 +1167,10 @@ function Lightbox({ index, setIndex }) {
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [index])
+  }, [close, step])
+
+  if (index === null || !photos[index]) return null
+  const p = photos[index]
 
   return (
     <AnimatePresence>
@@ -1139,7 +1194,7 @@ function Lightbox({ index, setIndex }) {
           <button
             onClick={close}
             aria-label="Close Lightbox"
-            className="absolute top-4 right-4 z-30 rounded-full bg-black/60 p-2 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10"
+            className="absolute top-4 right-4 z-30 rounded-full bg-black/60 p-2 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -1162,7 +1217,7 @@ function Lightbox({ index, setIndex }) {
                 step(-1)
               }}
               aria-label="Previous photo"
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/70 p-3 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/70 p-3 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10 cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -1172,7 +1227,7 @@ function Lightbox({ index, setIndex }) {
                 step(1)
               }}
               aria-label="Next photo"
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/70 p-3 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/70 p-3 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10 cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -1215,12 +1270,20 @@ function Lightbox({ index, setIndex }) {
             <div className="flex items-center gap-2 pt-2">
               <button
                 onClick={() => setZoom(!zoom)}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/15 bg-white/5 py-2 text-xs font-semibold text-silver hover:border-vermilion/50 transition-colors"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/15 bg-white/5 py-2 text-xs font-semibold text-silver hover:border-vermilion/50 transition-colors cursor-pointer"
               >
                 {zoom ? <ZoomOut className="w-3.5 h-3.5" /> : <ZoomIn className="w-3.5 h-3.5" />}
                 <span>{zoom ? 'Reset' : 'Zoom'}</span>
               </button>
 
+              <a
+                href="#book"
+                onClick={close}
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-vermilion py-2 text-xs font-bold uppercase tracking-wider text-obsidian shadow hover:bg-vermilion-glow transition-all"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>Book Shoot</span>
+              </a>
             </div>
           </div>
         </motion.div>
@@ -1248,29 +1311,26 @@ export default function Photographer() {
       </main>
 
       {/* Lightbox Modal */}
-      <Lightbox
-        index={lightboxIndex}
-        setIndex={setLightboxIndex}
+      {lightboxIndex !== null && photos[lightboxIndex] && (
+        <Lightbox
+          index={lightboxIndex}
+          setIndex={setLightboxIndex}
+        />
+      )}
+
+      <Footer
+        brand={PHOTOGRAPHER.name}
+        brandClass="font-frame"
+        tagline={`${PHOTOGRAPHER.place} · Fine-Art Light.`}
+        groups={[
+          { title: 'Explore', links: [['Archive', '#archive'], ['The Craft', '#comparison'], ['Philosophy', '#philosophy']] },
+          { title: 'Connect', links: [['Sessions', '#pricing'], ['Inquire', '#book']] },
+        ]}
+        footerClass="border-t border-white/10 bg-obsidian text-silver"
+        mutedClass="text-silver/60"
+        borderClass="border-white/10"
+        note="All photographic works cataloged under creative copyright."
       />
-
-      {/* Editorial Footer */}
-      <footer className="border-t border-white/10 bg-obsidian py-12 text-silver/60">
-        <div className={`${inner} flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono`}>
-          <div className="flex items-center gap-3">
-            <span className="font-frame text-base font-bold text-white">{PHOTOGRAPHER.name}</span>
-            <span>·</span>
-            <span>{PHOTOGRAPHER.place}</span>
-          </div>
-
-          <p className="text-center md:text-right text-silver/40">
-            © {new Date().getFullYear()} {PHOTOGRAPHER.name}. All photographic works cataloged under creative copyright.
-          </p>
-
-          <a href="#top" className="text-vermilion hover:underline uppercase tracking-wider font-bold">
-            ↑ Back to Top
-          </a>
-        </div>
-      </footer>
     </div>
   )
 }

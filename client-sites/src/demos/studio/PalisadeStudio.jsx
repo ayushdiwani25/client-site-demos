@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Navbar from '../../shared/Navbar'
+import Footer from '../../shared/components/Footer'
 import { WHATSAPP, projects, services, studioDetails, testimonials, faqs, projectTypes, budgets } from './data'
 
 const inner = 'mx-auto max-w-6xl px-6'
@@ -215,7 +216,19 @@ export default function PalisadeStudio() {
       <Testimonials />
       <FAQ />
       <Enquiry />
-      <footer className="bg-bottle px-6 pb-8 text-center text-xs text-limewash/60">Palisade Studio is a demo site. Copy and projects are placeholders.</footer>
+      <Footer
+        brand="Palisade Studio"
+        brandClass="font-studio"
+        tagline="Interior architecture for homes and working spaces in Gujarat."
+        groups={[
+          { title: 'Explore', links: [['Studio', '#studio'], ['Projects', '#work'], ['Process', '#services']] },
+          { title: 'Connect', links: [['FAQs', '#faq'], ['Enquire', '#enquire']] },
+        ]}
+        footerClass="bg-bottle text-limewash"
+        mutedClass="text-limewash/60"
+        borderClass="border-limewash/15"
+        note="Projects and copy are placeholders."
+      />
     </div>
   )
 }

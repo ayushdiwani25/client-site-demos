@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { AnimatePresence, motion } from 'framer-motion'
 import Navbar from '../../shared/components/Navbar'
 import ContactForm from '../../shared/components/ContactForm'
+import Footer from '../../shared/components/Footer'
 import { days, schedule, plans, trainers, testimonials, gallery, story, address, hours, faqs, nextClass, WHATSAPP } from './data'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -576,7 +577,18 @@ export default function Gym() {
           </div>
         </div>
       </section>
-      <footer className="bg-ink py-8 pb-24 text-center text-sm text-chalk/60 md:pb-8">Stride Strength Club, 12 Riverside Road. Open 6 am to 9 pm.</footer>
+      <Footer
+        brand="Stride Strength Club"
+        brandClass="font-display"
+        tagline="Small-group strength training at 12 Riverside Road. Open 6 am to 9 pm."
+        groups={[
+          { title: 'Explore', links: [['Timetable', '#schedule'], ['Plans', '#plans'], ['Coaches', '#coaches']] },
+          { title: 'Visit us', links: [['Results', '#results'], ['Free trial', '#contact']] },
+        ]}
+        footerClass="bg-ink text-chalk"
+        mutedClass="text-chalk/60"
+        borderClass="border-chalk/10"
+      />
     </div>
   )
 }

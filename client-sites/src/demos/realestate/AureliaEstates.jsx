@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Navbar from '../../shared/Navbar'
+import Footer from '../../shared/components/Footer'
 import { WHATSAPP, heroImage, listings, types, cities, services, intents, budgets, price } from './data'
 
 const inner = 'mx-auto max-w-6xl px-6'
@@ -148,7 +149,19 @@ export default function AureliaEstates() {
       <Listings />
       <Services />
       <Enquiry />
-      <footer className="bg-[#21382d] px-6 pb-8 text-center text-xs text-[#f5f2e9]/50">Aurelia Estates is a demo site. Listings and prices are placeholders.</footer>
+      <Footer
+        brand="Aurelia Estates"
+        brandClass="font-estate"
+        tagline="Carefully chosen homes across Gujarat."
+        groups={[
+          { title: 'Explore', links: [['Listings', '#listings'], ['Services', '#services']] },
+          { title: 'Connect', links: [['Arrange a viewing', '#listings'], ['Enquire', '#contact']] },
+        ]}
+        footerClass="bg-[#21382d] text-[#f5f2e9]"
+        mutedClass="text-[#f5f2e9]/60"
+        borderClass="border-[#f5f2e9]/10"
+        note="Listings and prices are placeholders."
+      />
     </div>
   )
 }
