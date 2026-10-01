@@ -166,7 +166,7 @@ function Trainers() {
         {trainers.map((t, i) => (
           <article key={t.name} className="group rounded-2xl bg-white overflow-hidden shadow-xs hover:shadow-md transition-shadow duration-300">
             <div className="overflow-hidden">
-              <img src={t.img} alt={t.name} className="h-64 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110" />
+              <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="h-64 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110" />
             </div>
             <div className="p-6">
               <h3 className="text-lg font-bold">{t.name}</h3>
@@ -225,7 +225,7 @@ function Gallery() {
             onClick={() => setOpen(g)}
             className="group relative aspect-4/3 overflow-hidden rounded-xl focus-visible:outline-white cursor-pointer"
           >
-            <img src={g.img} alt={g.label} className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
+            <img src={g.img} alt={g.label} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <span className="absolute bottom-3 left-3 text-left text-sm font-semibold text-white/90">{g.label}</span>
           </button>
@@ -507,7 +507,7 @@ function InstaStrip() {
             rel="noreferrer"
             className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer"
           >
-            <img src={p.img} alt={p.label} className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
+            <img src={p.img} alt={p.label} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <span className="absolute bottom-2 left-2 text-xs font-semibold text-white/90">{p.label}</span>
           </a>

@@ -86,7 +86,7 @@ function Work() {
         {projects.map((p) => (
           <li key={p.name} className="group min-w-0">
             <div className="overflow-hidden rounded-sm bg-plaster">
-              <img src={p.image} alt={`${p.name} interior project in ${p.location}`} loading="lazy" className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+              <img src={p.image} alt={`${p.name} interior project in ${p.location}`} loading="lazy" decoding="async" className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
             </div>
             <h3 className="mt-4 font-studio text-xl">{p.name}</h3>
             <p className="text-sm text-bottle/70">{p.category} in {p.location}</p>

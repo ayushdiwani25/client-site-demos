@@ -30,7 +30,7 @@ function Hero() {
           </div>
         </div>
         <div data-photo className="relative mx-auto w-full max-w-xl pb-8 md:ml-auto">
-          <img src={heroImage} alt="Sunlit contemporary residence with a calm, open-plan interior" className="aspect-[0.94] w-full rounded-t-[48%] object-cover object-center md:aspect-[0.88]" />
+          <img src={heroImage} alt="Sunlit contemporary residence with a calm, open-plan interior" fetchPriority="high" decoding="async" className="aspect-[0.94] w-full rounded-t-[48%] object-cover object-center md:aspect-[0.88]" />
           <div className="absolute bottom-0 left-0 flex max-w-76 items-center gap-4 bg-[#f5f2e9] p-4 shadow-lg shadow-[#1c3028]/10 sm:p-5">
             <span className="font-estate text-3xl text-[#a65f3d]">01</span>
             <div className="border-l border-[#1c3028]/15 pl-4">
@@ -73,7 +73,7 @@ function Listings() {
           {shown.map((l) => (
             <li key={l.id} className="group min-w-0">
               <div className="relative overflow-hidden rounded-sm bg-[#d9ded5]">
-                <img src={l.image} alt={`${l.name}, ${l.type === 'Apartment' ? 'an' : 'a'} ${l.type.toLowerCase()} in ${l.city}`} loading="lazy" className="aspect-[1.28] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                <img src={l.image} alt={`${l.name}, ${l.type === 'Apartment' ? 'an' : 'a'} ${l.type.toLowerCase()} in ${l.city}`} loading="lazy" decoding="async" className="aspect-[1.28] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
                 <span className="absolute left-3 top-3 bg-[#f5f2e9] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#21382d]">{l.type}</span>
                 <span className="absolute bottom-3 left-3 bg-[#21382d]/90 px-3 py-1.5 text-xs text-[#f5f2e9]">{l.area}, {l.city}</span>
               </div>

@@ -126,7 +126,7 @@ function CarCard({ car, favs, setFavs }) {
   return (
     <article className="car-card">
       <div className="car-image">
-        <img src={car.image} alt={car.name} />
+        <img src={car.image} alt={car.name} loading="lazy" decoding="async" />
         <span className="tag">{car.tag}</span>
         <button
           className={"heart " + (liked ? "liked" : "")}

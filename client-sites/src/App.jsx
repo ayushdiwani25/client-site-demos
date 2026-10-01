@@ -2,10 +2,10 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom'
 import { Expand, Minimize2 } from 'lucide-react'
 import Home from './pages/Home'
-import Gym from './demos/gym/StrideStrengthClub'
-import Photographer from './demos/photographer/Photographer'
-import RealEstate from './demos/realestate/AureliaEstates'
-import Studio from './demos/studio/PalisadeStudio'
+const Gym = lazy(() => import('./demos/gym/StrideStrengthClub'))
+const Photographer = lazy(() => import('./demos/photographer/Photographer'))
+const RealEstate = lazy(() => import('./demos/realestate/AureliaEstates'))
+const Studio = lazy(() => import('./demos/studio/PalisadeStudio'))
 
 // Code-split: car-rental's plain global CSS only loads on its own routes this way,
 // instead of shipping on every page and risking class-name collisions with the others.
@@ -43,7 +43,9 @@ function DemoLayout() {
           {isFullscreen ? 'Exit full screen' : 'View in full screen'}
         </button>
       </div>
-      <Outlet />
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
     </>
   )
 }
@@ -63,14 +65,7 @@ export default function App() {
         <Route path="/photographer" element={<Photographer />} />
         <Route path="/real-estate" element={<RealEstate />} />
         <Route path="/studio" element={<Studio />} />
-        <Route
-          path="/car-rental/*"
-          element={
-            <Suspense fallback={null}>
-              <CarRental />
-            </Suspense>
-          }
-        />
+        <Route path="/car-rental/*" element={<CarRental />} />
       </Route>
     </Routes>
   )
