@@ -7,6 +7,32 @@
   --color-chalk: #e8edf3;
   --color-court: #2143ff;
   --color-flash: #ffd23f;
+  --color-border: #d7ddE6;
+  --color-muted: #5b6472;
+
+  /* Palisade Studio (interior design demo) */
+  --font-serif: 'Fraunces', serif;
+  --font-grotesk: 'Hanken Grotesk', sans-serif;
+  --color-plaster: #e7e0d2;
+  --color-paper: #f7f3ea;
+  --color-graphite: #211f1c;
+  --color-walnut: #6b5842;
+  --color-sage: #47533f;
+  --color-stone: #a79c89;
+  --font-studio: 'Fraunces', serif;
+  --color-limewash: #f3f0e6;
+  --color-bottle: #26382f;
+  --color-brass: #a77a35;
+
+  /* Photographer demo (editorial darkroom theme) */
+  --font-frame: 'Fraunces', Georgia, serif;
+  --color-vermilion: #ff4d28;
+  --color-vermilion-glow: #ff6b4a;
+  --color-silver: #f1f3f7;
+  --color-obsidian: #0b0c10;
+  --color-charcoal: #15161c;
+  --color-card-dark: #1b1d24;
+  --color-amber-glow: #f59e0b;
 }
 
 html {
@@ -35,7 +61,6 @@ body {
 
 /* Button hover effects for simple CTA buttons (e.g. Free trial, Book a free class, Choose Plan, Submit) */
 .btn-cta,
-.btn-effect,
 a.btn-cta,
 button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]) {
   display: inline-flex;
@@ -48,7 +73,6 @@ button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]) {
 }
 
 .btn-cta:hover,
-.btn-effect:hover,
 a.btn-cta:hover,
 button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]):hover {
   transform: translateY(-2px) scale(1.04);
@@ -57,7 +81,6 @@ button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]):hover
 }
 
 .btn-cta:active,
-.btn-effect:active,
 a.btn-cta:active,
 button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]):active {
   transform: translateY(0px) scale(0.97);
@@ -65,7 +88,6 @@ button:not(:has(img)):not(.no-hover-scale):not(.faq-btn):not([role="tab"]):activ
   filter: brightness(0.98);
 }
 
-/* Tabs & toggles smooth feedback */
 button[role="tab"] {
   transition: transform 0.18s ease, background-color 0.18s ease;
 }

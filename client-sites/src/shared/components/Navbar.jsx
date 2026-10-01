@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
-export default function Navbar({ brand, links, cta }) {
+export default function Navbar({ brand, links, cta, showMobileCta = true }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -45,8 +46,15 @@ export default function Navbar({ brand, links, cta }) {
       </nav>
 
       {/* Mobile drawer */}
-      {open && (
-        <div className="md:hidden border-t border-border bg-white px-6 pb-4">
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.24, ease: 'easeInOut' }}
+            className="md:hidden overflow-hidden border-t border-border bg-white px-6 pb-4"
+          >
           <ul className="flex flex-col gap-1 pt-3">
             {links.map(([label, href]) => (
               <li key={href}>
@@ -54,11 +62,14 @@ export default function Navbar({ brand, links, cta }) {
               </li>
             ))}
           </ul>
-          <a href={cta[1]} onClick={() => setOpen(false)} className="btn-cta mt-3 block rounded-lg bg-court px-4 py-2.5 text-center text-sm font-semibold text-white">
-            {cta[0]}
-          </a>
-        </div>
-      )}
+          {showMobileCta && (
+            <a href={cta[1]} onClick={() => setOpen(false)} className="btn-cta mt-3 block rounded-lg bg-court px-4 py-2.5 text-center text-sm font-semibold text-white">
+              {cta[0]}
+            </a>
+          )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom'
 
 const demos = [
   { name: 'Stride Strength Club', path: '/gym', description: 'A focused fitness studio landing page with classes, plans, coaches, and a free trial flow.' },
+  { name: 'Photographer', path: '/photographer', description: 'A photography portfolio with a filterable archive and an immersive lightbox gallery.' },
+  { name: 'Aurelia Estates', path: '/real-estate', description: 'A considered property collection with listing filters, pricing, and viewing requests.' },
+  { name: 'Palisade Studio', path: '/studio', description: 'An interior design portfolio with a project catalogue, a case study, and an enquiry form.' },
+  { name: 'Veyra', path: '/car-rental', description: 'A premium car rental site with fleet browsing, filters, vehicle details, and a booking flow.' },
 ]
 
 export default function Home() {
@@ -32,4 +36,3 @@ export default function Home() {
     </main>
   )
 }
-

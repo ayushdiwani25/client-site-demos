@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { AnimatePresence, motion } from 'framer-motion'
-import Navbar from '../../shared/Navbar'
-import ContactForm from '../../shared/ContactForm'
+import Navbar from '../../shared/components/Navbar'
+import ContactForm from '../../shared/components/ContactForm'
 import { days, schedule, plans, trainers, testimonials, gallery, story, address, hours, faqs, nextClass, WHATSAPP } from './data'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -222,10 +222,10 @@ function Gallery() {
             key={g.id}
             type="button"
             onClick={() => setOpen(g)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-xl focus-visible:outline-white cursor-pointer"
+            className="group relative aspect-4/3 overflow-hidden rounded-xl focus-visible:outline-white cursor-pointer"
           >
             <img src={g.img} alt={g.label} className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <span className="absolute bottom-3 left-3 text-left text-sm font-semibold text-white/90">{g.label}</span>
           </button>
         ))}
@@ -239,9 +239,9 @@ function Gallery() {
             onClick={() => setOpen(null)}
             className="fixed inset-0 z-30 grid place-items-center bg-ink/80 p-6"
           >
-            <motion.div layoutId={`ph-${open.id}`} className="relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-2xl">
+            <motion.div layoutId={`ph-${open.id}`} className="relative aspect-4/3 w-full max-w-2xl overflow-hidden rounded-2xl">
               <img src={open.img} alt={open.label} className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
               <span className="absolute bottom-5 left-6 text-xl font-bold text-white">{open.label}</span>
             </motion.div>
           </motion.div>
@@ -298,7 +298,7 @@ function Faq() {
               href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi! I have a question about Stride Strength Club.")}`}
               target="_blank"
               rel="noreferrer"
-              className="btn-cta mt-4 !inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink py-2.5 text-center text-sm font-semibold text-chalk shadow-xs hover:brightness-110"
+              className="btn-cta mt-4 inline-flex! w-full items-center justify-center gap-2 rounded-lg bg-ink py-2.5 text-center text-sm font-semibold text-chalk shadow-xs hover:brightness-110"
             >
               Ask on WhatsApp →
             </a>
@@ -425,11 +425,11 @@ function MapHours() {
       </div>
 
       <div className="grid gap-0 overflow-hidden rounded-2xl bg-white shadow-sm md:grid-cols-2">
-        <div className="relative min-h-[380px] w-full bg-chalk md:min-h-full">
+        <div className="relative min-h-95 w-full bg-chalk md:min-h-full">
           <iframe
             title="Studio Location Map"
             src={`https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
-            className="h-full w-full min-h-[380px] border-0"
+            className="h-full w-full min-h-95 border-0"
             loading="lazy"
           />
         </div>
@@ -469,7 +469,7 @@ function MapHours() {
               href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
               target="_blank"
               rel="noreferrer"
-              className="btn-cta !inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-ink px-4 py-2.5 text-sm font-semibold text-chalk shadow-sm hover:brightness-110"
+              className="btn-cta inline-flex! items-center gap-2 whitespace-nowrap rounded-lg bg-ink px-4 py-2.5 text-sm font-semibold text-chalk shadow-sm hover:brightness-110"
             >
               <svg className="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
@@ -484,7 +484,6 @@ function MapHours() {
   )
 }
 
-const instaTint = ['bg-court', 'bg-flash text-ink', 'bg-ink', 'bg-court/70']
 function InstaStrip() {
   const posts = [
     { label: 'New PR Monday', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEWilzr93v26Yfr1g7lMdQU-uEb6vTOY7kfLJz7lpc0Q&s=10' },
@@ -499,19 +498,16 @@ function InstaStrip() {
         <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-sm font-semibold text-court">@stridestrength →</a>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-        {posts.map((p, i) => (
+        {posts.map((p) => (
           <a
             key={p.label}
             href="https://instagram.com"
             target="_blank"
             rel="noreferrer"
-            className={`group relative aspect-square overflow-hidden rounded-xl cursor-pointer ${!p.img ? instaTint[i] : ''}`}
+            className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer"
           >
-            {p.img
-              ? <img src={p.img} alt={p.label} className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-              : null
-            }
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
+            <img src={p.img} alt={p.label} className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <span className="absolute bottom-2 left-2 text-xs font-semibold text-white/90">{p.label}</span>
           </a>
         ))}
@@ -555,6 +551,7 @@ export default function Gym() {
         brand="Stride"
         links={[['Timetable', '#schedule'], ['Plans', '#plans'], ['Coaches', '#coaches'], ['Results', '#results']]}
         cta={['Free trial', '#contact']}
+        showMobileCta={false}
         active={active}
       />
       <Hero />

@@ -1,4 +1,4 @@
-export const WHATSAPP = '919999999999' // replace with the client's number (country code + number)
+export const WHATSAPP = import.meta.env.VITE_WHATSAPP_NO
 export const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 const base = [
