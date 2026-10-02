@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const demos = [
@@ -9,6 +10,10 @@ const demos = [
 ]
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "Client Sites | Demo Collection"
+  }, [])
+
   return (
     <main className="min-h-screen bg-chalk">
       <div className="mx-auto max-w-6xl px-6 py-20">

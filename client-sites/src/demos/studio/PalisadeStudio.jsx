@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import Navbar from '../../shared/Navbar'
+import Navbar from '../../shared/components/Navbar'
 import Footer from '../../shared/components/Footer'
 import { WHATSAPP, projects, services, studioDetails, testimonials, faqs, projectTypes, budgets } from './data'
 

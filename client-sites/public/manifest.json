@@ -1,0 +1,17 @@
+{
+  "short_name": "ClientSites",
+  "name": "Client Sites — Production React Demos",
+  "description": "A curated collection of production-grade client website demos spanning fitness, photography, luxury real estate, creative studio, and car rental.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0d0f12",
+  "theme_color": "#0d0f12",
+  "display": "standalone",
+  "orientation": "portrait-primary"
+}

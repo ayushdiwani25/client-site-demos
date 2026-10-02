@@ -52,6 +52,12 @@ function Shell({ children }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [loc.pathname]);
+  useEffect(() => {
+    document.title = "Veyra® | Premium Car Rental";
+    return () => {
+      document.title = "Client Sites | Demo Collection";
+    };
+  }, []);
   return (
     <div className="app">
       <header className="nav">
@@ -839,7 +845,7 @@ function Confirmation() {
           Your reservation request has been saved locally. This portfolio demo
           does not process real payments or bookings.
         </p>
-        <Link to="/car-rental/fleet" className="primary-btn">
+        <Link to="/car-rental/fleet" className="primary-btn text-white">
           Browse more cars <ArrowRight />
         </Link>
       </main>

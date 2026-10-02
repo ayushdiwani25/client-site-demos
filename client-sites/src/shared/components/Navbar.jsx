@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-export default function Navbar({ brand, links, cta, showMobileCta = true }) {
+export default function Navbar({
+  brand,
+  links,
+  cta,
+  showMobileCta = true,
+  // Theming overrides – defaults match the gym / home page palette
+  headerClass = '',
+  brandClass = '',
+  hoverClass = 'hover:text-ink',
+  ctaClass = 'bg-court text-white',
+  mobileDrawerClass = 'border-border bg-white',
+}) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -11,27 +22,32 @@ export default function Navbar({ brand, links, cta, showMobileCta = true }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Build header classes: use theme override if provided, otherwise default light style
+  const headerBaseClass = headerClass
+    ? `sticky top-0 z-30 transition-shadow duration-200 ${scrolled ? 'shadow-sm' : ''} border-b backdrop-blur ${headerClass}`
+    : `sticky top-0 z-30 transition-shadow duration-200 ${scrolled ? 'shadow-sm bg-white/95 backdrop-blur' : 'bg-white/80 backdrop-blur'} border-b border-border`
+
   return (
-    <header className={`sticky top-0 z-30 transition-shadow duration-200 ${scrolled ? 'shadow-sm bg-white/95 backdrop-blur' : 'bg-white/80 backdrop-blur'} border-b border-border`}>
+    <header className={headerBaseClass}>
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 h-16">
-        <a href="#top" className="text-lg font-extrabold tracking-tight text-ink">{brand}</a>
+        <a href="#top" className={`text-lg font-extrabold tracking-tight ${brandClass}`}>{brand}</a>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex gap-8 text-sm font-medium text-muted">
+        <ul className="hidden md:flex gap-8 text-sm font-medium">
           {links.map(([label, href]) => (
             <li key={href}>
-              <a href={href} className="hover:text-ink transition-colors">{label}</a>
+              <a href={href} className={`transition-colors ${hoverClass}`}>{label}</a>
             </li>
           ))}
         </ul>
 
         <div className="flex items-center gap-3">
-          <a href={cta[1]} className="btn-cta hidden md:inline-block rounded-lg bg-court px-4 py-2 text-sm font-semibold text-white">
+          <a href={cta[1]} className={`btn-cta hidden md:inline-block rounded-lg px-4 py-2 text-sm font-semibold ${ctaClass}`}>
             {cta[0]}
           </a>
           {/* Mobile menu toggle */}
           <button
-            className="no-hover-scale md:hidden p-2 rounded-lg hover:bg-chalk transition-colors"
+            className="no-hover-scale md:hidden p-2 rounded-lg hover:opacity-70 transition-opacity"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen(!open)}
@@ -53,17 +69,17 @@ export default function Navbar({ brand, links, cta, showMobileCta = true }) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.24, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden border-t border-border bg-white px-6 pb-4"
+            className={`md:hidden overflow-hidden border-t px-6 pb-4 ${mobileDrawerClass}`}
           >
           <ul className="flex flex-col gap-1 pt-3">
             {links.map(([label, href]) => (
               <li key={href}>
-                <a href={href} onClick={() => setOpen(false)} className="block py-2.5 text-sm font-medium text-muted hover:text-ink transition-colors">{label}</a>
+                <a href={href} onClick={() => setOpen(false)} className={`block py-2.5 text-sm font-medium transition-colors ${hoverClass}`}>{label}</a>
               </li>
             ))}
           </ul>
           {showMobileCta && (
-            <a href={cta[1]} onClick={() => setOpen(false)} className="btn-cta mt-3 block rounded-lg bg-court px-4 py-2.5 text-center text-sm font-semibold text-white">
+            <a href={cta[1]} onClick={() => setOpen(false)} className={`btn-cta mt-3 block rounded-lg px-4 py-2.5 text-center text-sm font-semibold ${ctaClass}`}>
               {cta[0]}
             </a>
           )}
@@ -73,4 +89,3 @@ export default function Navbar({ brand, links, cta, showMobileCta = true }) {
     </header>
   )
 }
-

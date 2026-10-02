@@ -163,7 +163,7 @@ function Trainers() {
     <section id="coaches" className={`${inner} py-20`}>
       <h2 className="font-display text-4xl font-extrabold">Your coaches</h2>
       <div className="mt-10 grid gap-4 md:grid-cols-3">
-        {trainers.map((t, i) => (
+        {trainers.map((t) => (
           <article key={t.name} className="group rounded-2xl bg-white overflow-hidden shadow-xs hover:shadow-md transition-shadow duration-300">
             <div className="overflow-hidden">
               <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="h-64 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110" />
@@ -546,6 +546,11 @@ function Bmi() {
 
 export default function Gym() {
   const active = useActiveSection(['schedule', 'plans', 'coaches', 'results'])
+
+  useEffect(() => {
+    document.title = 'Stride Strength Club | Strength Training in Ahmedabad'
+  }, [])
+
   return (
     <div id="top">
       <Navbar
