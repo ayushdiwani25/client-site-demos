@@ -69,7 +69,7 @@ export default function BeforeAfterColorAlchemy() {
               From Flat RAW to Film Royalty.
             </h2>
 
-            <p className="text-silver/70 text-base leading-relaxed">
+            <p className="text-silver/90 text-base leading-relaxed">
               Every deliverable frame is hand-tuned in an analog-calibrated
               workflow. We preserve highlight roll-off, lift true shadow
               details, and develop rich, warm Indian skin tones without plastic
@@ -80,10 +80,10 @@ export default function BeforeAfterColorAlchemy() {
               <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-obsidian/60 p-3.5">
                 <Sun className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-white">
                     Dynamic Highlight Rolloff
-                  </h4>
-                  <p className="text-xs text-silver/60 mt-0.5">
+                  </h3>
+                  <p className="text-xs text-silver/85 mt-0.5">
                     Gentle soft transitions mimicking medium-format celluloid
                     negative film.
                   </p>
@@ -93,10 +93,10 @@ export default function BeforeAfterColorAlchemy() {
               <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-obsidian/60 p-3.5">
                 <Sparkles className="w-5 h-5 text-vermilion shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-white">
                     Organic Grain & Halation
-                  </h4>
-                  <p className="text-xs text-silver/60 mt-0.5">
+                  </h3>
+                  <p className="text-xs text-silver/85 mt-0.5">
                     Subtle microscopic texture adding timeless tactile weight to
                     prints.
                   </p>

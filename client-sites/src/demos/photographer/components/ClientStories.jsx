@@ -23,17 +23,23 @@ export default function ClientStories() {
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex gap-2">
+            <div className="flex items-center gap-1.5">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveStory(i)}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${activeStory === i ? "w-8 bg-vermilion" : "w-2 bg-white/20"}`}
+                  className="py-3 px-1.5 cursor-pointer flex items-center"
                   aria-label={`Slide ${i + 1}`}
-                />
+                >
+                  <span
+                    className={`h-2 rounded-full transition-all block ${
+                      activeStory === i ? "w-8 bg-vermilion" : "w-2 bg-white/30"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
-            <div className="flex items-center gap-1.5 ml-2">
+            <div className="flex items-center gap-2 ml-2">
               <button
                 onClick={() =>
                   setActiveStory(
@@ -42,7 +48,7 @@ export default function ClientStories() {
                   )
                 }
                 aria-label="Previous testimonial"
-                className="p-1.5 rounded-full border border-white/15 hover:border-vermilion text-silver/80 hover:text-white transition-colors cursor-pointer"
+                className="flex items-center justify-center min-h-[44px] min-w-[44px] p-2 rounded-full border border-white/20 hover:border-vermilion text-silver/90 hover:text-white transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -51,7 +57,7 @@ export default function ClientStories() {
                   setActiveStory((activeStory + 1) % testimonials.length)
                 }
                 aria-label="Next testimonial"
-                className="p-1.5 rounded-full border border-white/15 hover:border-vermilion text-silver/80 hover:text-white transition-colors cursor-pointer"
+                className="flex items-center justify-center min-h-[44px] min-w-[44px] p-2 rounded-full border border-white/20 hover:border-vermilion text-silver/90 hover:text-white transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

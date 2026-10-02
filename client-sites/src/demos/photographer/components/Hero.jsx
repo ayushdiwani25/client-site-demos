@@ -98,7 +98,7 @@ export default function Hero({ onOpenLightbox }) {
                 <p className="font-frame text-2xl sm:text-3xl font-extrabold text-vermilion">
                   {PHOTOGRAPHER.shootsCompleted}+
                 </p>
-                <p className="text-xs text-silver/60 uppercase tracking-wider mt-0.5">
+                <p className="text-xs text-silver/80 uppercase tracking-wider mt-0.5">
                   Commissioned Shoots
                 </p>
               </div>
@@ -106,7 +106,7 @@ export default function Hero({ onOpenLightbox }) {
                 <p className="font-frame text-2xl sm:text-3xl font-extrabold text-white">
                   {PHOTOGRAPHER.awardsCount}
                 </p>
-                <p className="text-xs text-silver/60 uppercase tracking-wider mt-0.5">
+                <p className="text-xs text-silver/80 uppercase tracking-wider mt-0.5">
                   International Awards
                 </p>
               </div>
@@ -114,7 +114,7 @@ export default function Hero({ onOpenLightbox }) {
                 <p className="font-frame text-2xl sm:text-3xl font-extrabold text-amber-400">
                   100%
                 </p>
-                <p className="text-xs text-silver/60 uppercase tracking-wider mt-0.5">
+                <p className="text-xs text-silver/80 uppercase tracking-wider mt-0.5">
                   Natural Ambient Light
                 </p>
               </div>
@@ -184,14 +184,15 @@ export default function Hero({ onOpenLightbox }) {
                 </div>
 
                 {/* Shutter Card Bottom Controls */}
-                <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono text-silver/60">
+                <div className="mt-3 flex items-center justify-between px-2 text-xs font-mono text-silver/85">
                   <span className="flex items-center gap-1.5">
                     <Aperture className="w-3.5 h-3.5 text-vermilion" />
                     <span>{current.exif.camera}</span>
                   </span>
                   <button
                     onClick={triggerNextFrame}
-                    className="flex items-center gap-1 text-vermilion hover:text-white transition-colors cursor-pointer"
+                    className="flex items-center gap-1 text-vermilion hover:text-white transition-colors cursor-pointer min-h-[44px] px-2"
+                    aria-label="Next photograph frame"
                   >
                     <span>NEXT FRAME</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -206,16 +207,16 @@ export default function Hero({ onOpenLightbox }) {
       {/* Accolades Ticker Bar */}
       <div className="mt-16 border-y border-white/10 bg-charcoal/60 py-4">
         <div
-          className={`${inner} flex flex-wrap items-center justify-between gap-6 text-xs text-silver/60 font-medium`}
+          className={`${inner} flex flex-wrap items-center justify-between gap-6 text-xs text-silver/85 font-medium`}
         >
-          <span className="text-[11px] uppercase tracking-widest text-silver/40 font-mono">
+          <span className="text-[11px] uppercase tracking-widest text-silver/75 font-mono">
             Recognitions & Honors:
           </span>
           {accolades.map((acc) => (
             <div key={acc.name} className="flex items-center gap-2">
               <Award className="w-4 h-4 text-vermilion" />
               <span className="text-white font-semibold">{acc.name}</span>
-              <span className="text-silver/40 hidden sm:inline">
+              <span className="text-silver/75 hidden sm:inline">
                 — {acc.label}
               </span>
             </div>

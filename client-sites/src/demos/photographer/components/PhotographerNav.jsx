@@ -64,7 +64,7 @@ export default function PhotographerNav() {
           <div className="hidden max-sm:block">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 text-silver hover:text-vermilion"
+              className="flex items-center justify-center min-h-[44px] min-w-[44px] p-2.5 text-silver hover:text-vermilion"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (

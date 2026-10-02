@@ -172,29 +172,40 @@ Could you please confirm your calendar availability?`;
             <div className="lg:col-span-7 space-y-6">
               {/* Client Name */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-silver/80 mb-2">
+                <label
+                  htmlFor="client-name"
+                  className="block text-xs font-bold uppercase tracking-wider text-silver/90 mb-2"
+                >
                   Your Full Name
                 </label>
                 <input
                   required
+                  id="client-name"
+                  name="clientName"
                   type="text"
                   placeholder="e.g. Priyanshi & Aarav"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-charcoal px-4 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none"
+                  className="w-full rounded-xl border border-white/20 bg-charcoal px-4 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none"
                 />
               </div>
 
               {/* Location & Month */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-silver/80 mb-2">
+                  <label
+                    htmlFor="shoot-location"
+                    className="block text-xs font-bold uppercase tracking-wider text-silver/90 mb-2"
+                  >
                     Location
                   </label>
                   <select
+                    id="shoot-location"
+                    name="locationPreference"
+                    aria-label="Shoot Location"
                     value={locationPreference}
                     onChange={(e) => setLocationPreference(e.target.value)}
-                    className="w-full rounded-xl border border-white/15 bg-charcoal px-3 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none cursor-pointer"
+                    className="w-full rounded-xl border border-white/20 bg-charcoal px-3 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none cursor-pointer"
                   >
                     <option>Ahmedabad & Old City</option>
                     <option>Udaipur / Rajasthan Haveli</option>
@@ -205,22 +216,27 @@ Could you please confirm your calendar availability?`;
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-silver/80 mb-2">
+                  <label
+                    htmlFor="preferred-month"
+                    className="block text-xs font-bold uppercase tracking-wider text-silver/90 mb-2"
+                  >
                     Ideal Date / Month
                   </label>
                   <input
+                    id="preferred-month"
+                    name="preferredMonth"
                     type="text"
                     placeholder="e.g. Mid November 2026"
                     value={preferredMonth}
                     onChange={(e) => setPreferredMonth(e.target.value)}
-                    className="w-full rounded-xl border border-white/15 bg-charcoal px-4 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none"
+                    className="w-full rounded-xl border border-white/20 bg-charcoal px-4 py-2.5 text-sm text-silver focus:border-vermilion focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Addons Checklist */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-silver/80 mb-3">
+                <label className="block text-xs font-bold uppercase tracking-wider text-silver/90 mb-3">
                   A La Carte Add-ons
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -229,11 +245,20 @@ Could you please confirm your calendar availability?`;
                     return (
                       <div
                         key={addon.id}
+                        role="checkbox"
+                        aria-checked={checked}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            toggleAddon(addon.id);
+                          }
+                        }}
                         onClick={() => toggleAddon(addon.id)}
-                        className={`flex items-center justify-between rounded-xl border p-3 cursor-pointer select-none transition-all ${
+                        className={`flex items-center justify-between rounded-xl border p-3 cursor-pointer select-none transition-all focus:outline-none focus:ring-2 focus:ring-vermilion ${
                           checked
                             ? "border-vermilion bg-vermilion/10 text-white"
-                            : "border-white/10 bg-charcoal text-silver/70 hover:border-white/20"
+                            : "border-white/15 bg-charcoal text-silver/85 hover:border-white/30"
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
@@ -257,15 +282,20 @@ Could you please confirm your calendar availability?`;
 
               {/* Notes */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-silver/80 mb-2">
+                <label
+                  htmlFor="shoot-notes"
+                  className="block text-xs font-bold uppercase tracking-wider text-silver/90 mb-2"
+                >
                   Special Vision / Wardrobe Details (Optional)
                 </label>
                 <textarea
+                  id="shoot-notes"
+                  name="notes"
                   rows={2}
                   placeholder="Tell me a bit about the occasion, vibe, or preferred timing..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-charcoal p-3 text-xs text-silver focus:border-vermilion focus:outline-none"
+                  className="w-full rounded-xl border border-white/20 bg-charcoal p-3 text-xs text-silver focus:border-vermilion focus:outline-none"
                 />
               </div>
             </div>
@@ -276,10 +306,10 @@ Could you please confirm your calendar availability?`;
                 <span className="text-[11px] font-mono uppercase tracking-widest text-vermilion font-bold">
                   Live Estimate Summary
                 </span>
-                <h4 className="font-frame text-xl font-bold text-white mt-1">
+                <h3 className="font-frame text-xl font-bold text-white mt-1">
                   {selectedPackage.name}
-                </h4>
-                <p className="text-xs text-silver/60 mt-1">
+                </h3>
+                <p className="text-xs text-silver/85 mt-1">
                   {selectedPackage.duration}
                 </p>
 

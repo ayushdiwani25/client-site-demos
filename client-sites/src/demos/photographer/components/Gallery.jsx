@@ -73,25 +73,25 @@ export default function Gallery({ onOpenLightbox }) {
             <button
               onClick={() => setViewMode("grid")}
               aria-label="Masonry grid view"
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[40px] ${
                 viewMode === "grid"
-                  ? "bg-vermilion text-obsidian shadow-sm"
-                  : "text-silver/60 hover:text-white"
+                  ? "bg-vermilion text-obsidian shadow-sm font-bold"
+                  : "text-silver/85 hover:text-white"
               }`}
             >
-              <Grid className="w-3.5 h-3.5" />
+              <Grid className="w-4 h-4" />
               <span>Curated Grid</span>
             </button>
             <button
               onClick={() => setViewMode("filmstrip")}
               aria-label="35mm filmstrip contact sheet view"
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[40px] ${
                 viewMode === "filmstrip"
-                  ? "bg-vermilion text-obsidian shadow-sm"
-                  : "text-silver/60 hover:text-white"
+                  ? "bg-vermilion text-obsidian shadow-sm font-bold"
+                  : "text-silver/85 hover:text-white"
               }`}
             >
-              <MoveHorizontal className="w-3.5 h-3.5" />
+              <MoveHorizontal className="w-4 h-4" />
               <span>35mm Filmstrip</span>
             </button>
           </div>
@@ -249,19 +249,19 @@ export default function Gallery({ onOpenLightbox }) {
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={() => scrollFilmstrip(-1)}
-                  className="flex items-center justify-center h-6 w-6 rounded border border-white/20 bg-charcoal text-silver hover:border-vermilion hover:text-white transition-colors cursor-pointer"
+                  className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-white/20 bg-charcoal text-silver/90 hover:border-vermilion hover:text-white transition-colors cursor-pointer"
                   aria-label="Scroll filmstrip left"
                   title="Scroll left"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => scrollFilmstrip(1)}
-                  className="flex items-center justify-center h-6 w-6 rounded border border-white/20 bg-charcoal text-silver hover:border-vermilion hover:text-white transition-colors cursor-pointer"
+                  className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg border border-white/20 bg-charcoal text-silver/90 hover:border-vermilion hover:text-white transition-colors cursor-pointer"
                   aria-label="Scroll filmstrip right"
                   title="Scroll right"
                 >
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>

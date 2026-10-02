@@ -73,7 +73,7 @@ export default function Lightbox({ index, setIndex }) {
           <button
             onClick={close}
             aria-label="Close Lightbox"
-            className="absolute top-4 right-4 z-30 rounded-full bg-black/60 p-2 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10 cursor-pointer"
+            className="absolute top-4 right-4 z-30 flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full bg-black/60 p-2.5 text-silver hover:bg-vermilion hover:text-obsidian transition-colors border border-white/10 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

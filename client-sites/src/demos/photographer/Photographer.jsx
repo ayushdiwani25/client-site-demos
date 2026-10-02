@@ -29,7 +29,7 @@ export default function Photographer() {
       <PhotographerNav />
 
       {/* Main Content Sections */}
-      <main>
+      <main id="main-content" tabIndex="-1" className="focus:outline-none">
         <Hero onOpenLightbox={(idx) => setLightboxIndex(idx)} />
         <Gallery onOpenLightbox={(idx) => setLightboxIndex(idx)} />
         <BeforeAfterColorAlchemy />
