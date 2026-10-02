@@ -15,7 +15,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-chalk">
+    <main id="main-content" tabIndex="-1" className="min-h-screen bg-chalk focus:outline-none">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <p className="text-xs font-semibold uppercase tracking-widest text-court mb-4">Client sites</p>
         <h1 className="text-5xl font-extrabold tracking-tight text-ink md:text-6xl">Demo collection</h1>
